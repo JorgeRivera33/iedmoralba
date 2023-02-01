@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Patua+One&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Solitreo&display=swap" rel="stylesheet">
+	<title>Document</title>
+	<!--Estilos generales-->
+	<style type="text/css">
+		*{border: 0; padding: 0; margin: 0; box-sizing: border-box;}
+		#app{
+			display: flex;
+			width: 100%;
+			overflow: hidden;
+			font-size: 18px;
+		}	
+	</style>
+	<!--Estilos sidebar-->
+	<style type="text/css">
+		#sidebar{
+			max-width: 300px;
+			width: 85%;
+			height: 100vh;
+			background-color: #f5f6f7;
+			position: fixed;
+			transition: left 1s;
+			top: 0; left: -85%;
+			overflow-y: auto;
+			z-index: 10;
+		}
+	</style>
+	<!--Estilos page-->
+	<style type="text/css">
+		#page{
+			width: 100%;
+			margin-left: 0%;
+			background-color: white;
+			padding: 15px;
+			transition: width 1s, margin-left 1s;
+			position: relative;
+		}
+		#btnsider{
+			width: 25px;
+			height: 25px;
+			background-image: url('https://cdn-icons-png.flaticon.com/128/3575/3575303.png');
+			background-size: 100% 100%;
+			cursor: pointer;
+			position: fixed;
+			transition: left 1s;
+		}
+		#marco1{
+			border: 0px solid black;
+			margin-top: 30px;
+			widows: 100%;
+			height: 100%;
+			padding: 20px;
+			padding-left: 30px;
+			margin-left: 0px;
+			transition: margin-left 1s;
+		}
+		#bloque1{
+			width: 100%;
+		}
+		.t1{
+			font-family: 'Merriweather', serif;
+		}
+		.t2{
+			font-family: 'Patua One', cursive;
+			font-size: 20px;
+		}
+		#redes{
+			display: flex;
+			margin: 10px 0px 10px 0px;
+			justify-content: center;
+		}
+		.red{
+			width: 25px;
+			height: 25px;
+			margin-right: 5px;
+		}
+		.linea2{
+			width: 100%;
+			height: 3px;
+			background: #f56a6a;
+			margin-top: 5px;
+		}
+		#red1{
+			background: url('https://cdn-icons-png.flaticon.com/128/107/107195.png');
+			background-size: 100% 100%;
+		}
+		#red2{
+			background: url('https://cdn-icons-png.flaticon.com/128/733/733603.png');
+			background-size: 100% 100%;
+			opacity: 0.5;
+		}
+		#red3{
+			background: url('https://cdn-icons-png.flaticon.com/128/733/733627.png');
+			background-size: 100% 100%;
+			opacity: 0.5;
+		}
+		#red4{
+			background: url('https://cdn-icons-png.flaticon.com/128/1384/1384031.png');
+			background-size: 100% 100%;
+			opacity: 0.5;
+		}
+		#red5{
+			background: url('https://cdn-icons-png.flaticon.com/128/9380/9380780.png');
+			background-size: 100% 100%;
+			opacity: 0.5;
+		}
+		.bloque2,.bloque5{
+			display: flex;
+			flex-wrap: wrap;
+			margin-top: 30px;
+			padding-bottom: 30px;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+		}
+		.bloque2{
+			max-width: 800px;
+			margin: 0 auto;
+			margin-top: 30px;
+		}
+		.img1{
+			max-width: 300px;
+			width: 80%;
+			margin: 0 auto;
+		}
+		.img2{
+			width: 100%;
+			margin: 0 auto;
+		}
+		.desc1{
+			text-align: justify;
+			margin-top: 20px;
+			font-family: 'Roboto', sans-serif;
+			font-size: 18px;
+		}
+		.t3{
+			font-family: 'Patua One', cursive;
+			font-size: 30px;
+			text-align: center;
+		}
+		.t4{
+			font-family: 'Merriweather', serif;
+			font-size: 16px;
+			text-align: center;
+			margin-top: 10px;
+		}
+		.bloque3{
+			margin-top: 20px;
+		}
+		.boton1{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border: 2px solid #f56a6a;
+			width: 150px;
+			padding: 10px 5px 10px 5px;
+			text-align: center;
+			margin-top: 15px;
+			font-family: 'Lora', serif;
+			border-radius: 5px;
+			font-weight: bold;
+		}
+		a{	
+			color: #f56a6a;
+			list-style: none;
+			text-decoration: none;
+		}
+		#bloque4{
+			font-family: 'Patua One', cursive;
+			font-size: 30px;
+			margin-top: 20px;
+			margin-bottom: 20px;
+			border-bottom: 3px solid #f56a6a;
+		}
+		.t5{
+			font-family: 'Patua One', cursive;
+			font-size: 25px;
+		}
+		.t6{
+			font-family: 'Solitreo', cursive;
+			font-size: 16px;
+			margin-top: 5px;
+		}
+		.t7{
+			margin-top: 10px;
+			font-family: 'Merriweather', serif;
+			font-style: italic;
+			font-size: 16px;
+		}
+		.boton2{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border: 2px solid #f56a6a;
+			width: 100px;
+			padding: 10px 5px 10px 5px;
+			text-align: center;
+			margin-top: 15px;
+			font-family: 'Lora', serif;
+			border-radius: 5px;
+			font-weight: bold;
+		}
+	</style>
+	<!--Estilos mediqueries-->
+	<style type="text/css">
+		@media only screen and (min-width: 356px) {
+			#page{
+				margin-left: 0%;
+			}
+			#btnsider{
+				left: 10px;
+			}
+		}
+		@media only screen and (min-width: 400px) {
+			.linea4{
+				display: flex;
+				align-items: baseline;
+				gap: 10px;
+			}
+
+		}
+		@media only screen and (min-width: 500px) {
+			.textos{
+				display: flex;
+			}
+			.t2{margin-left: 8px;}
+		}
+		@media only screen and (min-width: 600px) {
+			.bloque2{
+				flex-wrap: nowrap;
+				align-items: center;
+				flex-direction: row-reverse;
+			}
+
+		}
+		/*
+		@media only screen and (min-width: 700px) {
+			#page{
+				background: orangered;
+			}
+			.img2{
+				width: 50%;
+			}
+			.bloque5{
+				flex-wrap: nowrap;
+				align-items: flex-start;
+				gap: 10px;
+			}
+			.bloque3{
+				margin-top: 0px;
+			}
+			.linea4{
+				display: block;
+			}
+		}
+		*/
+		@media only screen and (min-width: 650px) {
+			#noticias{
+				display: flex;
+				gap: 20px;
+				flex-wrap: wrap;
+				justify-content: center;
+			}
+			.bloque5{
+				width: 48%;
+			}
+			.linea4{
+				display: block;
+			}
+		}
+		@media only screen and (min-width: 700px) {
+			#bloque1{
+				display: flex;
+				align-items: center;
+			}
+			#redes{
+				position: absolute;
+				right: 30px;
+			}
+			.t3{
+				font-size: 36.5px;
+			}
+		}
+		@media only screen and (min-width: 1100px) {
+			.bloque5{
+				width: 30%;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<div id="sidebar"></div>
+		<div id="page">
+			<div id="btnsider" active="false"></div>
+			<div id="marco1">
+				<div id="bloque1">
+					<div class="textos">
+						<div class="t1">Página de inicio</div>
+						<div class="t2">Colegio Moralba Sur Oriental</div>
+					</div>
+					<div id="redes">
+						<div class="red" id="red1"></div>
+						<div class="red" id="red2"></div>
+						<div class="red" id="red3"></div>
+						<div class="red" id="red4"></div>
+						<div class="red" id="red5"></div>
+					</div>
+				</div>
+				<div class="linea2"></div>
+				<div class="bloque2">
+					<img src="img/escudo.png" class="img1" alt="escudo">
+					<div class="bloque3">
+						<div class="t3">IED MORALBA SUR ORIENTAL</div>
+						<div class="t4">Crecimiento personal y desarrollo social productivo</div>
+						<p class="desc1">
+							El colegio Moralba Sur Orienta es una institución educativa publica ubicada en la periferia de la localidad cuarta del barrio san cristobal sur.
+						</p>
+						<div class="boton1">
+							<a href="#">Conocer más</a>
+						</div>
+					</div>
+				</div>
+				<div id="bloque4">Noticias:</div>
+				<div id="noticias">
+
+					<div class="bloque5">
+						<img src="https://cdn.pixabay.com/photo/2017/07/20/15/21/chickens-2522623_960_720.jpg" class="img2" alt="">
+						<div class="bloque3">
+							<div class="t5">Aprende sobre las gallinas</div>
+							<div class="linea4">
+								<div class="t7">Jorge Armando Rivera</div>
+								<div class="t6">31-01-2023</div>
+							</div>
+							<p class="desc1">
+								Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum numquam perferendis et fugit, ut iusto inventore, esse illo obcaecati exercitationem eligendi unde praesentium quaerat ipsam iste a asperiores sapiente, culpa.
+							</p>
+							<div class="boton2">
+								<a href="#">Leer</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="bloque5">
+						<img src="https://cdn.pixabay.com/photo/2018/10/01/09/21/pets-3715733_960_720.jpg" class="img2" alt="">
+						<div class="bloque3">
+							<div class="t5">Tipos de perros</div>
+							<div class="linea4">
+								<div class="t7">Sindy Lorena Henao</div>
+								<div class="t6">31-01-2023</div>
+							</div>
+							<p class="desc1">
+								Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum, reprehenderit, aspernatur atque dolorem suscipit cupiditate ducimus unde quae ad et. Rem ex quae sapiente maiores, sit? Voluptates, ipsa consectetur eos.
+							</p>
+							<div class="boton2">
+								<a href="#">Leer</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="bloque5">
+						<img src="https://cdn.pixabay.com/photo/2016/02/10/21/59/landscape-1192669_960_720.jpg" class="img2" alt="">
+						<div class="bloque3">
+							<div class="t5">Paisaje de Moralba</div>
+							<div class="linea4">
+								<div class="t7">Ernesto Cortes</div>
+								<div class="t6">31-01-2023</div>
+							</div>
+							<p class="desc1">
+								Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum, reprehenderit, aspernatur atque dolorem suscipit cupiditate ducimus unde quae ad et. Rem ex quae sapiente maiores, sit? Voluptates, ipsa consectetur eos.
+							</p>
+							<div class="boton2">
+								<a href="#">Leer</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="bloque5">
+						<img src="https://cdn.pixabay.com/photo/2015/01/08/18/24/children-593313_960_720.jpg" class="img2" alt="">
+						<div class="bloque3">
+							<div class="t5">Clases de tecnología</div>
+							<div class="linea4">
+								<div class="t7">Vladimir Contreras</div>
+								<div class="t6">31-01-2023</div>
+							</div>
+							<p class="desc1">
+								Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum, reprehenderit, aspernatur atque dolorem suscipit cupiditate ducimus unde quae ad et. Rem ex quae sapiente maiores, sit? Voluptates, ipsa consectetur eos.
+							</p>
+							<div class="boton2">
+								<a href="#">Leer</a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		function activarBtnSider(){
+			const btn=document.querySelector("#btnsider");
+			btn.addEventListener("click",function(){
+				let pantallaw=window.innerWidth;
+				console.log(pantallaw);
+				const sidebar=document.querySelector("#sidebar");
+				const page=document.querySelector("#page");
+				const marco1=document.querySelector("#marco1");
+				const activo=this.getAttribute("active");
+				const btnsider=document.querySelector("#btnsider");
+				this.removeAttribute("style");
+				if(activo==="true"){
+					console.log("1");
+					if(Number(pantallaw)<=355){
+						console.log("1.1");
+						sidebar.style.left="-85%";
+						page.style.marginLeft="0%";
+						marco1.style.marginLeft="0px";
+						this.setAttribute("active","false");
+					}else{
+						console.log("1.2");
+						sidebar.style.left="-300px";
+						btnsider.style.left="10px";
+						this.setAttribute("active","false");
+					}
+				}else{
+					console.log("2");
+					if(Number(pantallaw)<=355){
+						console.log("2.1");
+						sidebar.style.left="0%";
+						page.style.marginLeft="85%";
+						marco1.style.marginLeft="50px";
+						this.setAttribute("active","true");
+					}else{
+						console.log("2.2");
+						sidebar.style.left="0px";
+						btnsider.style.left="310px";
+						this.setAttribute("active","true");
+					}
+				}
+			});
+		}
+	</script>
+	<script type="text/javascript">
+		window.onload=function(){
+			activarBtnSider();
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<!--Estilos generales-->
+	<style type="text/css">
+		*{border: 0; padding: 0; margin: 0; box-sizing: border-box;}
+		#app{
+			display: flex;
+		}	
+	</style>
+	<!--Estilos sidebar-->
+	<style type="text/css">
+		#sidebar{
+			width: 85%;
+			height: 100vh;
+			background-color: #f5f6f7;
+			position: fixed;
+			transition: left 1s;
+			top: 0; left: -85%;
+			overflow-y: auto;
+		}
+	</style>
+	<!--Estilos page-->
+	<style type="text/css">
+		#page{
+			width: 100%;
+			height: 100vh;
+			margin-left: 0%;
+			background-color: white;
+			padding: 15px;
+			transition: width 1s, margin-left 1s;
+		}
+		#btnsider{
+			width: 25px;
+			height: 25px;
+			background-image: url('https://cdn-icons-png.flaticon.com/128/3575/3575303.png');
+			background-size: 100% 100%;
+			cursor: pointer;
+		}
+		#marco1{
+			border: 1px solid black;
+			widows: 100%;
+			height: 100%;
+			padding: 20px;
+		}
+		#bloque1{
+			border: 1px solid red;
+			min-width: 375px;
+			width: 100%;
+		}
+	</style>
+	<!--Estilos mediqueries-->
+	<style type="text/css"></style>
+</head>
+<body>
+	<div id="app">
+		<div id="sidebar"></div>
+		<div id="page">
+			<div id="btnsider" active="false"></div>
+			<div id="marco1">
+				<div id="bloque1">
+					<div class="textos">
+						<div>Página de inicio</div>
+						<div>Colegio Moralba Sur Oriental</div>
+					</div>
+					<div class="redes">
+						<div class="red"></div>
+						<div class="red"></div>
+						<div class="red"></div>
+						<div class="red"></div>
+						<div class="red"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		function activarBtnSider(){
+			const btn=document.querySelector("#btnsider");
+			btn.addEventListener("click",function(){
+				const sidebar=document.querySelector("#sidebar");
+				const page=document.querySelector("#page");
+				const activo=this.getAttribute("active");
+				if(activo==="true"){
+					sidebar.style.left="-85%";
+					page.style.width="100%";
+					page.style.marginLeft="0%";
+					this.setAttribute("active","false");
+				}else{
+					sidebar.style.left="0%";
+					page.style.width="15%";
+					page.style.marginLeft="85%";
+					this.setAttribute("active","true");
+				}
+			});
+		}
+	</script>
+	<script type="text/javascript">
+		window.onload=function(){
+			activarBtnSider();
+		}
+	</script>
+</body>
+</html>
