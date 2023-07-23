@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	
+	<!-- Ejemplo de dos elementos HTML -->
+<div id="div1" style="position: absolute; top: 100px; left: 100px; width: 100px; height: 100px; background-color: red;"></div>
+<div id="div2" style="position: absolute; top: 110px; left: 110px; width: 100px; height: 100px; background-color: blue;"></div>
+
+<!-- Llamar a la función con los elementos -->
+<script>
+/*
+	function estanTocando() {
+	  const rect1 = document.getElementById('div1').getBoundingClientRect();
+	  const rect2 = document.getElementById('div2').getBoundingClientRect();
+
+	  //const rect1 = div1.getBoundingClientRect();
+	  //const rect2 = div2.getBoundingClientRect();
+
+	  console.log(rect1);
+	  console.log(rect2);
+
+	  // Verificar si los bordes de los elementos se superponen
+	  if (
+	    rect1.left < rect2.right &&
+	    rect1.right > rect2.left &&
+	    rect1.top < rect2.bottom &&
+	    rect1.bottom > rect2.top
+	  ) {
+	    // Los elementos están tocándose
+	    //return true;
+	    console.log(true);
+	  }else{
+	  	console.log(false);
+	  }
+
+	  // Los elementos no están tocándose
+	  //return false;
+	}
+*/
+
+function estaTocando(element1, element2, distance){
+	const rect1 = element1.getBoundingClientRect();
+	const rect2 = element2.getBoundingClientRect();
+	let dx=Math.abs(rect1.x - rect2.x);
+	let dy=Math.abs(rect1.y - rect2.y);
+	if(dx < distance && dy < distance){
+		console.log("estan tocando");
+		return(true);
+	}
+}
+
+
+
+  const div1 = document.getElementById('div1');
+  const div2 = document.getElementById('div2');
+
+  if (estaTocando(div1, div2,20)) {
+    console.log('Los elementos están tocándose.');
+  } else {
+    console.log('Los elementos no están tocándose.');
+  }
+</script>
+
+<script type="text/javascript">
+	
+
+</script>
+
+
+</body>
+</html>
