@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script type="text/javascript" src="js/escalarCentrar.js"></script>
+	<script src="js/kaboom.js"></script>
+	<title>Document</title>
+	<style type="text/css">
+		#lienzo{
+			width: 731px;
+			height: 411px;
+			display: flex;
+			justify-content: center;
+			align-content: center;
+			align-items: center;
+			position: relative;
+			overflow: hidden;
+			user-select: none;
+			background-color: green;
+		}
+	</style>
+</head>
+<body>
+	<div id="lienzo"></div>
+	<script type="text/javascript">
+		kaboom({
+			root:document.querySelector("#lienzo"),
+		    background: [255,225,245],
+		    font: "sans-serif"
+		});
+		//debug.inspect = true;
+		let velocidad=0;
+		let giroPermitido=false;
+		let auto;
+		let posRef="";
+		let texto1;
+	</script>
+	<script type="text/javascript">
+		function checarDirec(){
+			 if(auto.direccion==='up'){
+			    	auto.rotateTo(0);
+			    	auto.move(0,-velocidad);
+			    }
+			    if(auto.direccion==='right'){
+			    	auto.rotateTo(90);
+			    	auto.move(velocidad,0);
+			    }
+			    if(auto.direccion==='down'){
+			    	auto.rotateTo(180);
+			    	auto.move(0,velocidad);
+			    }
+			    if(auto.direccion==='left'){
+			    	auto.rotateTo(-90);
+			    	auto.move(-velocidad,0);
+			    }
+
+			    if (isKeyDown("right") && giroPermitido===false) {
+			    	if(auto.direccion==="up" || auto.direccion==="down"){	
+			        	auto.move(velocidad, 0);
+			    	}
+			    }
+			    if (isKeyDown("left") && giroPermitido===false) {
+			    	if(auto.direccion==="up" || auto.direccion==="down"){	
+			        	auto.move(-velocidad, 0);
+			    	}
+			    }
+			    if (isKeyDown("up") && giroPermitido===false) {
+			    	if(auto.direccion==="left" || auto.direccion==="right"){
+			        	auto.move(0, -velocidad);
+			    	}
+			    }
+			    if (isKeyDown("down") && giroPermitido===false) {
+			    	if(auto.direccion==="left" || auto.direccion==="right"){
+			        	auto.move(0, velocidad);
+			    	}
+			    } 
+		}
+		function checarColisiones(){
+			auto.onCollide("obstaculo", (enemy) => {
+				console.log('choca');
+				giroPermitido=true;
+			});
+			auto.onCollideEnd("obstaculo", () => {
+				console.log('fin del choca');
+				giroPermitido=false;
+			});
+			auto.onCollideEnd("puerta1", () => {
+				posRef=auto.pos.y;
+				go("escena2");
+			});
+		}
+		function activarTeclas(){
+			onKeyPress("up", () => {
+				if(giroPermitido){
+					auto.direccion='up';
+				}
+			});
+
+			onKeyPress("down", () => {
+				if(giroPermitido){
+					auto.direccion='down';
+				}
+			});
+
+			onKeyPress("left", () => {
+				if(giroPermitido){
+					auto.direccion='left';
+				}
+			});
+
+			onKeyPress("right", () => {
+				if(giroPermitido){
+					console.log("derecha")
+					auto.direccion='right';
+				}
+			});
+
+			onKeyPress("a", () => {
+				velocidad+=10;
+				actualizarTexto1();
+			});
+
+			onKeyPress("d", () => {
+				velocidad-=10;
+				actualizarTexto1();
+			});
+		}
+		function colocarFlechas(){
+			let ftop=add([
+				sprite('flecha'),
+				pos((110-15),(411-95)),
+				width(10),
+				anchor("center"),
+				scale(0.18),
+				z(1),
+				area(),
+				'btntop'
+			]);
+			ftop.onUpdate(() => {
+				onHover("btntop",()=>{
+					if(isMouseDown('left') && giroPermitido===false){
+						if(auto.direccion==="left" || auto.direccion==="right"){
+				        	auto.move(0, -velocidad);
+				    	}
+					}
+				});
+			});
+			onClick('btntop',()=>{
+				if(giroPermitido){
+					auto.direccion='up';
+				}
+			});
+
+			let fleft=add([
+				sprite('flecha'),
+				pos((50-15),(411-35)),
+				scale(0.18),
+				rotate(-90),
+				anchor("center"),
+				width(10),
+				area(),
+				z(1),
+				'btnleft'
+			]);
+			fleft.onUpdate(() => {
+				onHover("btnleft",()=>{
+					if(isMouseDown('left') && giroPermitido===false){
+						if(auto.direccion==="up" || auto.direccion==="down"){	
+				        	auto.move(-velocidad, 0);
+				    	}
+					}
+				});
+			});
+			onClick('btnleft',()=>{
+				if(giroPermitido){
+					auto.direccion='left';
+				}
+			});
+
+			let fdown=add([
+				sprite('flecha'),
+				pos((110-15),(411-35)),
+				scale(0.18),
+				anchor("center"),
+				width(10),
+				rotate(180),
+				z(1),
+				area(),
+				'btndown'
+			]);
+			fdown.onUpdate(() => {
+				onHover("btndown",()=>{
+					if(isMouseDown('left') && giroPermitido===false){
+						if(auto.direccion==="left" || auto.direccion==="right"){
+				        	auto.move(0, velocidad);
+				    	}
+					}
+				});
+			});
+			onClick('btndown',()=>{
+				if(giroPermitido){
+					auto.direccion='down';
+				}
+			});
+
+			let fright=add([
+				sprite('flecha'),
+				pos((110-15+60),(411-35)),
+				scale(0.18),
+				anchor("center"),
+				width(10),
+				rotate(90),
+				z(1),
+				area(),
+				'btnright'
+			]);	
+			fright.onUpdate(() => {
+				onHover("btnright",()=>{
+					if(isMouseDown('left') && giroPermitido===false){
+						if(auto.direccion==="up" || auto.direccion==="down"){	
+				        	auto.move(velocidad, 0);
+				    	}
+					}
+				});
+			});
+			onClick('btnright',()=>{
+				if(giroPermitido){
+					auto.direccion='right';
+				}
+			});
+		}
+		function colocarPedales(){
+			//acelerador
+			let acelerador=add([
+				sprite('acelerador'),
+				pos((731-35),(411-35)),
+				scale(0.18),
+				anchor("center"),
+				z(1),
+				opacity(1),
+				area(),
+				'acelerador'
+			]);
+			onClick("acelerador", () => {
+				console.log("acelerador");
+				velocidad+=10;
+				actualizarTexto1();
+			})
+
+			//freno
+			let freno=add([
+				sprite('freno'),
+				pos((731-35),(411-95)),
+				scale(0.18),
+				anchor("center"),
+				z(1),
+				opacity(1),
+				area(),
+				'freno'
+			]);
+			onClick("freno", () => {
+				console.log("freno");
+				velocidad-=10;
+				actualizarTexto1();
+			})
+		}
+		function colocarAuto(){
+			auto=add([
+				sprite("auto"),
+				pos(352,390),
+				scale(0.015),
+				rotate(0),
+				anchor("center"),
+				z(2),
+				area(),
+				body()
+			]);
+			//auto update
+			auto.onUpdate(() => {
+			   checarDirec();
+			});
+			//colisiones
+			checarColisiones();
+			//direccion
+			auto.direccion="up";
+		}
+		function colocarTexto(){
+			texto1 = add([
+				pos(731-80,10),
+				z(2),
+				// Render text with the text() component
+				text("0 km/h", {
+					// What font to use
+					// It'll wrap to next line if the text width exceeds the width option specified here
+					width: 300,
+					// The height of character
+					size: 20,
+					// Text alignment ("left", "center", "right", default "left")
+					align: "left",
+					lineSpacing: 8,
+					letterSpacing: 1
+				}),
+			]);
+		}
+		function actualizarTexto1(){
+			texto1.text=velocidad+" km/h";
+		}
+	</script>
+	<script type="text/javascript">
+		loadSprite("escena1", "img/escena1.svg");
+		loadSprite("escena2", "img/escena2.svg");
+		loadSprite("cuadro", "img/cuadro.png");
+		loadSprite("auto", "img/auto.png");
+		loadSprite("acelerador","img/acel.svg");
+		loadSprite("freno","img/fren.svg");
+		loadSprite("flecha","img/flecha.png");
+	</script>
+	<script type="text/javascript">
+		const escena1=scene('escena1',()=>{
+			activarTeclas();
+			//escena1
+			add([
+				sprite('escena1'),
+				pos(0,0),
+				scale(1),
+				z(1)
+			]);
+			//cuadro
+			add([
+				sprite('cuadro'),
+				pos(center()),
+				scale(0.1),
+				anchor("center"),
+				z(1),
+				opacity(1),
+				area({
+					scale:0.5
+				}),
+				'obstaculo'
+			]);
+			//cuadro
+			add([
+				sprite('cuadro'),
+				pos((731-10),411/2),
+				scale(0.1),
+				anchor("center"),
+				z(1),
+				opacity(1),
+				area({
+					scale:0.5
+				}),
+				'puerta1'
+			]);
+			//acelerador y freno
+			colocarPedales();
+			//flechas
+			colocarFlechas();
+			//auto
+			colocarAuto();
+			//texto
+			colocarTexto();
+		});
+		const escena2=scene('escena2',()=>{
+			activarTeclas();
+			//escena1
+			add([
+				sprite('escena2'),
+				pos(0,0),
+				scale(1),
+				z(1)
+			]);
+			add([
+				sprite('cuadro'),
+				pos(230,411/2),
+				scale(0.1),
+				anchor("center"),
+				z(1),
+				opacity(1),
+				area({
+					scale:0.5
+				}),
+				'obstaculo'
+			]);
+
+			add([
+				sprite('cuadro'),
+				pos(511,411/2),
+				scale(0.1),
+				anchor("center"),
+				z(1),
+				opacity(1),
+				area({
+					scale:0.5
+				}),
+				'obstaculo'
+			]);
+			//acelerador y freno
+			colocarPedales();
+			//flechas
+			colocarFlechas();
+			//auto
+			auto=add([
+				sprite("auto"),
+				pos(0,posRef),
+				scale(0.015),
+				rotate(90),
+				anchor("center"),
+				z(2),
+				area(),
+				body()
+			]);
+
+			auto.onUpdate(() => {
+			   checarDirec();
+			});
+
+			checarColisiones();
+
+			auto.direccion="right";
+
+			colocarTexto();
+			actualizarTexto1();
+		});
+		go("escena1");
+	</script>
+</body>
+</html>
